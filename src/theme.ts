@@ -64,7 +64,9 @@ export const { css } = createStitches({
       3: '8px',
       round: '9999px'
     },
-    shadows: {},
+    shadows: {
+      focus: '0 0 0 3px rgba(66, 153, 255, 0.6)'
+    },
     zIndices: {},
     transitions: {}
   }
