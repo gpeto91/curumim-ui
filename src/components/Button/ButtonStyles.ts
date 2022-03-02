@@ -23,7 +23,7 @@ export const ButtonStyle = css('button', {
   },
 
   '&:focus': {
-    boxShadow: '0 0 0 3px rgba(66, 153, 255, 0.6)',
+    boxShadow: '$focus',
     borderRadius: '$2'
   },
 
