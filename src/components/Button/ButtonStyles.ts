@@ -4,6 +4,7 @@ export const ButtonStyle = css('button', {
   all: 'unset',
   padding: '$4',
   textAlign: 'center',
+  fontSize: '$base',
   fontWeight: '$bold',
   transition: 'filter .2s, box-shadow .2s, opacity .2s',
   cursor: 'pointer',
