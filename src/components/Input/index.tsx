@@ -1,6 +1,36 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { forwardRef } from 'react';
 import { css } from '../../theme';
+
+const InputWrapper = css({
+  position: 'relative'
+});
+
+const PasswordIcon = css({
+  all: 'unset',
+  position: 'absolute',
+  right: 0,
+  top: 0,
+  width: 40,
+  height: 40,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: 'box-shadow .2s',
+  cursor: 'pointer',
+
+  '&:focus': {
+    boxShadow: '$focus',
+    borderRadius: '$2'
+  },
+
+  '& svg': {
+    width: 20,
+    height: 20,
+    stroke: '#bbb'
+  }
+});
 
 const InputStyle = css({
   all: 'unset',
@@ -9,7 +39,8 @@ const InputStyle = css({
   backgroundColor: 'White',
   fontSize: '$base',
   transition: 'box-shadow .2s',
-  textAlign: 'left',
+  width: '100%',
+  boxSizing: 'border-box',
 
   '&[data-invalid="true"]': {
     boxShadow: '0 0 0 3px rgba(222, 33, 20, 0.6)',
@@ -19,17 +50,64 @@ const InputStyle = css({
   '&:focus': {
     boxShadow: '$focus',
     borderRadius: '$2'
+  },
+
+  '&::-ms-reveal, &::-ms-clear': {
+    display: 'none'
+  },
+
+  variants: {
+    password: {
+      true: {
+        paddingRight: 45
+      }
+    }
   }
 });
 
-export interface IInput extends React.DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
-  type?: 'text' | 'email';
+export interface IInput
+  extends React.DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+  type?: 'text' | 'email' | 'password';
   isInvalid?: boolean;
+  id: string;
+  value?: string;
 }
 
-const Input = forwardRef<HTMLInputElement, IInput>(({ children, type = 'text', isInvalid = false, ...props }, ref: React.LegacyRef<HTMLInputElement>) => {
-  return <input className={InputStyle()} type={type} {...props} ref={ref} data-invalid={isInvalid} />;
-});
+const Input = forwardRef<HTMLInputElement, IInput>(
+  (
+    { children, type = 'text', isInvalid = false, id, value = '', ...props },
+    ref: React.LegacyRef<HTMLInputElement>
+  ) => {
+    const [showPass, setShowPass] = useState<boolean>(false);
+
+    return (
+      <div className={InputWrapper()}>
+        <input
+          className={InputStyle({ password: type === 'password' })}
+          id={id}
+          name={id}
+          type={type === 'password' && showPass ? 'text' : type}
+          ref={ref}
+          data-invalid={isInvalid}
+          value={value}
+          {...props}
+        />
+
+        {type === 'password' && (
+          <div
+            className={PasswordIcon()}
+            tabIndex={0}
+            role="button"
+            onKeyPress={(event) => event.key === 'Enter' && setShowPass(!showPass)}
+            onClick={() => setShowPass(!showPass)}
+          >
+            {showPass ? <FiEyeOff /> : <FiEye />}
+          </div>
+        )}
+      </div>
+    );
+  }
+);
 
 Input.displayName = 'Input';
 
