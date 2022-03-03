@@ -19,7 +19,10 @@ const SelectGroup: React.FunctionComponent<ISelectGroup> = ({ children, label, .
       <Select.Label className={Label()}>{label}</Select.Label>
       {children &&
         React.Children.map(children, (child) => {
-          if (React.isValidElement(child) && (child as React.ReactElement<any>).type === SelectItem) {
+          if (
+            React.isValidElement(child) &&
+            (child as React.ReactElement<any>).type === SelectItem
+          ) {
             return child;
           }
 
