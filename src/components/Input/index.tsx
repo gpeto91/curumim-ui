@@ -4,7 +4,8 @@ import { css } from '../../theme';
 
 const InputStyle = css({
   all: 'unset',
-  padding: '$4',
+  padding: '0 $4',
+  height: 40,
   backgroundColor: 'White',
   fontSize: '$base',
   transition: 'box-shadow .2s',

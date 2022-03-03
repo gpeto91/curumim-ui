@@ -2,7 +2,8 @@ import { css } from '../../theme';
 
 export const ButtonStyle = css('button', {
   all: 'unset',
-  padding: '$4',
+  padding: '0 $4',
+  height: 40,
   textAlign: 'center',
   fontSize: '$base',
   fontWeight: '$bold',

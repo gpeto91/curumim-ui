@@ -21,7 +21,8 @@ const SelectTrigger = css({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: '$4',
+  padding: '0 $4',
+  height: 40,
   fontSize: '$base',
   backgroundColor: 'White',
 
@@ -40,7 +41,12 @@ const SelectViewport = css({
   padding: '$4'
 });
 
-const SelectRoot: React.FunctionComponent<ISelectProps> & ISelectComponents = ({ children, ariaLabel, defaultValue, ...props }) => {
+const SelectRoot: React.FunctionComponent<ISelectProps> & ISelectComponents = ({
+  children,
+  ariaLabel,
+  defaultValue,
+  ...props
+}) => {
   return (
     <Select.Root defaultValue={defaultValue} {...props}>
       <Select.Trigger className={SelectTrigger()} aria-label={ariaLabel}>
