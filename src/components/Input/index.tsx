@@ -2,6 +2,7 @@ import React, { HTMLAttributes, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { forwardRef } from 'react';
 import { css } from '../../theme';
+import useMask, { MaskTypes } from '../../hooks/useMask';
 
 const InputWrapper = css({
   position: 'relative'
@@ -71,14 +72,41 @@ export interface IInput
   isInvalid?: boolean;
   id: string;
   value?: string;
+  mask?: MaskTypes;
+  limitPercent?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, IInput>(
   (
-    { children, type = 'text', isInvalid = false, id, value = '', ...props },
+    {
+      children,
+      type = 'text',
+      isInvalid = false,
+      id,
+      value = '',
+      mask: maskType,
+      onChange,
+      limitPercent = false,
+      ...props
+    },
     ref: React.LegacyRef<HTMLInputElement>
   ) => {
     const [showPass, setShowPass] = useState<boolean>(false);
+    const { mask } = useMask();
+
+    const _onChange = (event: React.FormEvent<HTMLInputElement>) => {
+      let value = event.currentTarget.value;
+
+      if (maskType === 'percent' && limitPercent) {
+        event.currentTarget.value = mask(value, maskType, { limit: true });
+      } else if (maskType) {
+        event.currentTarget.value = mask(value, maskType);
+      }
+
+      if (onChange) {
+        onChange(event);
+      }
+    };
 
     return (
       <div className={InputWrapper()}>
@@ -90,6 +118,7 @@ const Input = forwardRef<HTMLInputElement, IInput>(
           ref={ref}
           data-invalid={isInvalid}
           value={value}
+          onChange={_onChange}
           {...props}
         />
 
