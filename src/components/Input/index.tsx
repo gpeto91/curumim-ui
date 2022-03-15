@@ -74,6 +74,7 @@ export interface IInput
   value?: string;
   mask?: MaskTypes;
   limitPercent?: boolean;
+  decimalPrecision?: number;
 }
 
 const Input = forwardRef<HTMLInputElement, IInput>(
@@ -87,6 +88,7 @@ const Input = forwardRef<HTMLInputElement, IInput>(
       mask: maskType,
       onChange,
       limitPercent = false,
+      decimalPrecision = 2,
       ...props
     },
     ref: React.LegacyRef<HTMLInputElement>
@@ -97,8 +99,13 @@ const Input = forwardRef<HTMLInputElement, IInput>(
     const _onChange = (event: React.FormEvent<HTMLInputElement>) => {
       let value = event.currentTarget.value;
 
-      if (maskType === 'percent' && limitPercent) {
-        event.currentTarget.value = mask(value, maskType, { limit: true });
+      if (maskType === 'percent') {
+        event.currentTarget.value = mask(value, maskType, {
+          limit: limitPercent,
+          precision: decimalPrecision
+        });
+      } else if (maskType === 'currency') {
+        event.currentTarget.value = mask(value, maskType, { precision: decimalPrecision });
       } else if (maskType) {
         event.currentTarget.value = mask(value, maskType);
       }

@@ -12,6 +12,7 @@ export type MaskTypes =
 
 export type InputOptions = {
   limit?: boolean;
+  precision?: number;
 };
 
 export default function useMask() {
