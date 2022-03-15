@@ -10,11 +10,7 @@ const percent = (value: string, { limit = false, precision = 2 }: InputOptions):
     if (Number(value) > limitValue) value = limitValue.toString();
   }
 
-  if (limit) {
-    return value.replace(rx, '$1,$2');
-  } else {
-    return value.replace(rx, '$1,$2');
-  }
+  return value.replace(rx, '$1,$2');
 };
 
 export { percent };
