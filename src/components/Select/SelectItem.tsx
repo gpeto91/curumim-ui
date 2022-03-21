@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { FiCheck } from 'react-icons/fi';
 import * as Select from '@radix-ui/react-select';
 import { css } from '../../theme';
@@ -29,16 +29,16 @@ export interface ISelectItem extends Select.SelectItemProps {
   description: string;
 }
 
-const SelectItem: React.FunctionComponent<ISelectItem> = ({ value, description, ...props }) => {
+const SelectItem = forwardRef<HTMLDivElement, ISelectItem>(({ description, ...props }, ref) => {
   return (
-    <Select.Item className={SelectItemStyle()} value={value} {...props}>
+    <Select.Item className={SelectItemStyle()} {...props} ref={ref}>
       <Select.ItemText>{description}</Select.ItemText>
       <Select.ItemIndicator>
         <FiCheck />
       </Select.ItemIndicator>
     </Select.Item>
   );
-};
+});
 
 SelectItem.displayName = 'Item';
 

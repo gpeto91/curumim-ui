@@ -1,19 +1,16 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, forwardRef } from 'react';
 import { css } from '../../theme';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import * as Select from '@radix-ui/react-select';
-import SelectItem, { ISelectItem } from './SelectItem';
-import SelectGroup, { ISelectGroup } from './SelectGroup';
+import SelectItem from './SelectItem';
+import SelectGroup from './SelectGroup';
 
 interface ISelectProps extends Select.SelectProps {
+  id: string;
   ariaLabel: string;
   defaultValue: string;
   children?: ReactNode | ReactNode[];
-}
-
-interface ISelectComponents {
-  Group: React.FunctionComponent<ISelectGroup>;
-  Item: React.FunctionComponent<ISelectItem>;
+  isInvalid?: boolean;
 }
 
 const SelectTrigger = css({
@@ -25,6 +22,11 @@ const SelectTrigger = css({
   height: 40,
   fontSize: '$base',
   backgroundColor: 'White',
+
+  '&[data-invalid="true"]': {
+    boxShadow: '0 0 0 3px rgba(222, 33, 20, 0.6)',
+    borderRadius: '$2'
+  },
 
   '&:focus': {
     boxShadow: '$focus',
@@ -41,35 +43,39 @@ const SelectViewport = css({
   padding: '$4'
 });
 
-const SelectRoot: React.FunctionComponent<ISelectProps> & ISelectComponents = ({
-  children,
-  ariaLabel,
-  defaultValue,
-  ...props
-}) => {
-  return (
-    <Select.Root defaultValue={defaultValue} {...props}>
-      <Select.Trigger className={SelectTrigger()} aria-label={ariaLabel}>
-        <Select.Value />
-        <Select.Icon>
-          <FiChevronDown />
-        </Select.Icon>
-      </Select.Trigger>
+const SelectRoot = forwardRef<HTMLButtonElement, ISelectProps>(
+  ({ children, ariaLabel, defaultValue, id, isInvalid = false, ...props }, ref) => {
+    return (
+      <Select.Root defaultValue={defaultValue} {...props}>
+        <Select.Trigger
+          id={id}
+          data-invalid={isInvalid}
+          className={SelectTrigger()}
+          aria-label={ariaLabel}
+          ref={ref}
+        >
+          <Select.Value />
+          <Select.Icon>
+            <FiChevronDown />
+          </Select.Icon>
+        </Select.Trigger>
 
-      <Select.Content className={SelectContent()}>
-        <Select.ScrollUpButton>
-          <FiChevronUp />
-        </Select.ScrollUpButton>
-        <Select.Viewport className={SelectViewport()}>{children}</Select.Viewport>
-        <Select.ScrollDownButton>
-          <FiChevronDown />
-        </Select.ScrollDownButton>
-      </Select.Content>
-    </Select.Root>
-  );
-};
+        <Select.Content className={SelectContent()}>
+          <Select.ScrollUpButton>
+            <FiChevronUp />
+          </Select.ScrollUpButton>
+          <Select.Viewport className={SelectViewport()}>{children}</Select.Viewport>
+          <Select.ScrollDownButton>
+            <FiChevronDown />
+          </Select.ScrollDownButton>
+        </Select.Content>
+      </Select.Root>
+    );
+  }
+);
 
-SelectRoot.Group = SelectGroup;
-SelectRoot.Item = SelectItem;
+SelectRoot.displayName = 'SelectRoot';
 
-export { SelectRoot };
+const SelectNamespace = Object.assign(SelectRoot, { Group: SelectGroup, Item: SelectItem });
+
+export { SelectNamespace as SelectRoot };
