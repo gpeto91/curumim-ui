@@ -63,7 +63,8 @@ const FormField: React.FunctionComponent<IFormField> = ({
         React.Children.map(children, (child) => {
           if (
             (React.isValidElement(child) && (child as React.ReactElement<any>).type === Input) ||
-            (child as React.ReactElement<any>).type === SelectRoot
+            (child as React.ReactElement<any>).type === SelectRoot ||
+            (child as React.ReactElement<any>).type === 'Controller'
           ) {
             return React.cloneElement(child as React.ReactElement<any>, { isInvalid });
           }
