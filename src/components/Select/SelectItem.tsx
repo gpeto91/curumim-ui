@@ -33,9 +33,14 @@ const SelectItem = forwardRef<HTMLDivElement, ISelectItem>(({ description, ...pr
   return (
     <Select.Item className={SelectItemStyle()} {...props} ref={ref}>
       <Select.ItemText>{description}</Select.ItemText>
-      <Select.ItemIndicator>
-        <FiCheck />
-      </Select.ItemIndicator>
+
+      {!props.disabled ? (
+        <Select.ItemIndicator>
+          <FiCheck />
+        </Select.ItemIndicator>
+      ) : (
+        <Select.ItemIndicator />
+      )}
     </Select.Item>
   );
 });
