@@ -84,11 +84,10 @@ const Input = forwardRef<HTMLInputElement, IInput>(
       type = 'text',
       isInvalid = false,
       id,
-      value = '',
       mask: maskType,
-      onChange,
       limitPercent = false,
       decimalPrecision = 2,
+      onChange,
       ...props
     },
     ref: React.LegacyRef<HTMLInputElement>
@@ -124,8 +123,8 @@ const Input = forwardRef<HTMLInputElement, IInput>(
           type={type === 'password' && showPass ? 'text' : type}
           ref={ref}
           data-invalid={isInvalid}
-          value={value}
-          onChange={_onChange}
+          value={props.value}
+          onChange={maskType ? _onChange : onChange}
           {...props}
         />
 
