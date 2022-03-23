@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Label from '@radix-ui/react-label';
-import { Input, SelectRoot } from '..';
+import { Input, SelectRoot, Autocomplete } from '..';
 import { css } from '../../theme';
 
 interface IFormField {
@@ -64,7 +64,7 @@ const FormField: React.FunctionComponent<IFormField> = ({
           if (
             (React.isValidElement(child) && (child as React.ReactElement<any>).type === Input) ||
             (child as React.ReactElement<any>).type === SelectRoot ||
-            (child as React.ReactElement<any>).type === 'Controller'
+            (child as React.ReactElement<any>).type === Autocomplete
           ) {
             return React.cloneElement(child as React.ReactElement<any>, { isInvalid });
           }
