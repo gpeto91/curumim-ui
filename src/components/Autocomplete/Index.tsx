@@ -1,35 +1,9 @@
 import React, { forwardRef, HTMLAttributes, useState } from 'react';
-import { Input } from '../Input';
 import { css } from '@stitches/core';
 
-const Item = css({
-  backgroundColor: 'White',
-  transition: 'background-color .2s',
-  padding: '10px 5px',
-
-  variants: {
-    active: {
-      true: {
-        backgroundColor: 'Orange'
-      }
-    },
-    disabled: {
-      true: {
-        pointerEvents: 'none',
-        cursor: 'default',
-        opacity: 0.6
-      }
-    }
-  }
-});
-
-const List = css({
-  listStyle: 'none',
-  paddingLeft: 0,
-  position: 'absolute',
-  top: '25px',
-  width: '100%'
-});
+import { Input } from '../Input';
+import AutocompleteList from './AutocompleteList';
+import AutocompleteItem from './AutocompleteItem';
 
 const AutocompleteWrapper = css({
   position: 'relative'
@@ -50,40 +24,11 @@ interface AutocompleteProps
   onValueChange?: (value: string) => void;
 }
 
-interface AutocompleteListProps
-  extends React.DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement> {}
-
-interface AutocompleteItemProps
-  extends React.DetailedHTMLProps<HTMLAttributes<HTMLLIElement>, HTMLLIElement> {
-  disabled?: boolean;
-  isActive: boolean;
-}
-
 enum Key {
   'ENTER' = 'Enter',
   'ARROW_UP' = 'ArrowUp',
   'ARROW_DOWN' = 'ArrowDown'
 }
-
-const AutocompleteList = forwardRef<HTMLUListElement, AutocompleteListProps>(
-  ({ children, ...props }, ref) => {
-    return (
-      <ul {...props} ref={ref} className={List()}>
-        {children}
-      </ul>
-    );
-  }
-);
-
-const AutocompleteItem = forwardRef<HTMLLIElement, AutocompleteItemProps>(
-  ({ children, isActive, ...props }, ref) => {
-    return (
-      <li {...props} ref={ref} className={Item({ disabled: props.disabled, active: isActive })}>
-        {children}
-      </li>
-    );
-  }
-);
 
 const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
   ({ suggestions, id, onValueChange, ...props }, ref) => {
@@ -94,18 +39,57 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       userInput: ''
     });
 
+    const setItem = (
+      userInput: string,
+      showSuggestions: boolean,
+      filteredSuggestions: Array<any> = []
+    ) => {
+      setData({
+        activeSuggestion: 0,
+        filteredSuggestions,
+        showSuggestions,
+        userInput
+      });
+    };
+
+    const setActiveSuggestion = (value: number) => {
+      setData({
+        ...data,
+        activeSuggestion: value
+      });
+    };
+
+    const keyboardActions = {
+      [Key.ENTER]: (event: React.KeyboardEvent<HTMLInputElement>) => {
+        const showSuggestions = false;
+        event.preventDefault();
+
+        setItem(data.filteredSuggestions[data.activeSuggestion], showSuggestions);
+
+        if (onValueChange) {
+          onValueChange(data.filteredSuggestions[data.activeSuggestion]);
+        }
+      },
+      [Key.ARROW_UP]: () => {
+        if (data.activeSuggestion === 0) return;
+
+        setActiveSuggestion(data.activeSuggestion - 1);
+      },
+      [Key.ARROW_DOWN]: () => {
+        if (data.activeSuggestion === data.filteredSuggestions.length - 1) return;
+
+        setActiveSuggestion(data.activeSuggestion + 1);
+      }
+    };
+
     const _onChange = (event: React.FormEvent<HTMLInputElement>) => {
       const userInput = event.currentTarget.value;
       const filteredSuggestions = suggestions.filter(
         (suggestion) => suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
       );
+      const showSuggestions = true;
 
-      setData({
-        activeSuggestion: 0,
-        filteredSuggestions,
-        showSuggestions: true,
-        userInput: event.currentTarget.value
-      });
+      setItem(event.currentTarget.value, showSuggestions, filteredSuggestions);
 
       if (props.onChange) {
         props.onChange(event);
@@ -113,12 +97,8 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     };
 
     const _onClick = (event: React.MouseEvent<HTMLLIElement>) => {
-      setData({
-        activeSuggestion: 0,
-        filteredSuggestions: [],
-        showSuggestions: false,
-        userInput: event.currentTarget.innerText
-      });
+      const showSuggestions = false;
+      setItem(event.currentTarget.innerText, showSuggestions);
 
       if (onValueChange) {
         onValueChange(event.currentTarget.innerText);
@@ -126,49 +106,13 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     };
 
     const _onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      const actions = {
-        [Key.ENTER]: () => {
-          event.preventDefault();
-
-          setData({
-            ...data,
-            activeSuggestion: 0,
-            showSuggestions: false,
-            userInput: data.filteredSuggestions[data.activeSuggestion]
-          });
-
-          if (onValueChange) {
-            onValueChange(data.filteredSuggestions[data.activeSuggestion]);
-          }
-        },
-        [Key.ARROW_UP]: () => {
-          if (data.activeSuggestion === 0) return;
-
-          setData({
-            ...data,
-            activeSuggestion: data.activeSuggestion - 1
-          });
-        },
-        [Key.ARROW_DOWN]: () => {
-          if (data.activeSuggestion === data.filteredSuggestions.length - 1) return;
-
-          setData({
-            ...data,
-            activeSuggestion: data.activeSuggestion + 1
-          });
-        }
-      };
-
-      if (actions[event.key as Key]) {
-        actions[event.key as Key]();
+      if (keyboardActions[event.key as Key]) {
+        keyboardActions[event.key as Key](event);
       }
     };
 
     const _onHover = (index: number) => {
-      setData({
-        ...data,
-        activeSuggestion: index
-      });
+      setActiveSuggestion(index);
     };
 
     const _onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
