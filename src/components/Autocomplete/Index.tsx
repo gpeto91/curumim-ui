@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes, useState } from 'react';
+import React, { forwardRef, HTMLAttributes, useRef, useState } from 'react';
 import { css } from '@stitches/core';
 
 import { Input } from '../Input';
@@ -22,6 +22,7 @@ interface AutocompleteProps
   id: string;
   value?: string;
   onValueChange?: (value: string) => void;
+  strict?: boolean; // aceita apenas valores definidos na sugestão
 }
 
 enum Key {
@@ -31,7 +32,9 @@ enum Key {
 }
 
 const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
-  ({ suggestions, id, onValueChange, ...props }, ref) => {
+  ({ suggestions, id, onValueChange, strict = false, ...props }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [value, setValue] = useState<string>('');
     const [data, setData] = useState<IAutocompleteState>({
       activeSuggestion: 0,
       filteredSuggestions: [],
@@ -65,6 +68,7 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         event.preventDefault();
 
         setItem(data.filteredSuggestions[data.activeSuggestion], showSuggestions);
+        setValue(data.filteredSuggestions[data.activeSuggestion]);
 
         if (onValueChange) {
           onValueChange(data.filteredSuggestions[data.activeSuggestion]);
@@ -90,6 +94,7 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       const showSuggestions = true;
 
       setItem(event.currentTarget.value, showSuggestions, filteredSuggestions);
+      setValue(event.currentTarget.value);
 
       if (props.onChange) {
         props.onChange(event);
@@ -99,6 +104,7 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const _onClick = (event: React.MouseEvent<HTMLLIElement>) => {
       const showSuggestions = false;
       setItem(event.currentTarget.innerText, showSuggestions);
+      setValue(event.currentTarget.innerText);
 
       if (onValueChange) {
         onValueChange(event.currentTarget.innerText);
@@ -156,10 +162,10 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
           id={id}
           onKeyDown={_onKeyDown}
           type="text"
+          value={strict ? value : props.value}
           onBlur={_onBlur}
           onChange={_onChange}
-          value={props.value}
-          ref={ref}
+          ref={strict ? inputRef : ref}
         />
       </div>
     );
