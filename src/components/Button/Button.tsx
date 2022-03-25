@@ -10,6 +10,7 @@ export interface IButtonProps
   > {
   isDisabled?: boolean;
   variant?: 'primary' | 'secondary' | 'info' | 'warning' | 'danger';
+  layout?: 'fill' | 'outline' | 'ghost';
   isLoading?: boolean;
   loadingText?: string;
 }
@@ -17,6 +18,7 @@ export interface IButtonProps
 export const Button: React.FunctionComponent<IButtonProps> = ({
   children,
   variant = 'primary',
+  layout = 'fill',
   isDisabled = false,
   isLoading = false,
   loadingText = 'Carregando...',
@@ -26,7 +28,7 @@ export const Button: React.FunctionComponent<IButtonProps> = ({
     <button
       {...props}
       disabled={isDisabled}
-      className={ButtonStyle({ variant, disabled: isDisabled || isLoading })}
+      className={ButtonStyle({ variant, layout, disabled: isDisabled || isLoading })}
     >
       {isLoading && (
         <div className={Loader()}>
