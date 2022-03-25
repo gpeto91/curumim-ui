@@ -8,6 +8,7 @@ const List = css({
   listStyle: 'none',
   paddingLeft: 0,
   position: 'absolute',
+  zIndex: 10,
   top: '25px',
   width: '100%'
 });
