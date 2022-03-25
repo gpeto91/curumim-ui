@@ -9,7 +9,7 @@ const Item = css({
   variants: {
     active: {
       true: {
-        backgroundColor: 'Orange'
+        backgroundColor: 'rgba(65, 140, 71, 0.35)'
       }
     },
     disabled: {
