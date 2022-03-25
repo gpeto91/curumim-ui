@@ -17,6 +17,7 @@ export const { css } = createStitches({
       yellowDark: '#BFAB00',
       blue: '#4287f5',
       red: '#f73b3b',
+      gray: '#757575',
       primary: '$green',
       accent: '$yellow'
     },
