@@ -9,6 +9,7 @@ export const { css } = createStitches({
   },
   theme: {
     colors: {
+      greenLight: '#cdddcf',
       green: '#418c47',
       greenDarker: '#377C3D',
       greenDark: '#2E6C33',
