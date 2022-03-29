@@ -125,6 +125,7 @@ const Input = forwardRef<HTMLInputElement, IInput>(
           data-invalid={isInvalid}
           value={props.value}
           onChange={maskType ? _onChange : onChange}
+          autoComplete="new-password"
           {...props}
         />
 
@@ -147,3 +148,5 @@ const Input = forwardRef<HTMLInputElement, IInput>(
 Input.displayName = 'Input';
 
 export { Input };
+
+// TODO parametrizar autoComplete
