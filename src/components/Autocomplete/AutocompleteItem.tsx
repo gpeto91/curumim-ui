@@ -2,14 +2,16 @@ import React, { forwardRef, HTMLAttributes } from 'react';
 import { css } from '../../theme';
 
 const Item = css({
+  all: 'unset',
   backgroundColor: 'White',
   transition: 'background-color .2s',
   padding: '10px 5px',
+  display: 'block',
 
   variants: {
     active: {
       true: {
-        backgroundColor: 'rgba(65, 140, 71, 0.35)'
+        backgroundColor: '$greenLight'
       }
     },
     disabled: {
