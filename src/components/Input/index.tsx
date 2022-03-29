@@ -58,7 +58,7 @@ const InputStyle = css({
   },
 
   variants: {
-    password: {
+    hasPadding: {
       true: {
         paddingRight: 45
       }
@@ -68,7 +68,7 @@ const InputStyle = css({
 
 export interface IInput
   extends React.DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
-  type?: 'text' | 'email' | 'password';
+  type?: 'text' | 'email' | 'password' | 'search';
   isInvalid?: boolean;
   id: string;
   value?: string;
@@ -117,7 +117,7 @@ const Input = forwardRef<HTMLInputElement, IInput>(
     return (
       <div className={InputWrapper()}>
         <input
-          className={InputStyle({ password: type === 'password' })}
+          className={InputStyle({ hasPadding: type === 'password' || type === 'search' })}
           id={id}
           name={id}
           type={type === 'password' && showPass ? 'text' : type}
