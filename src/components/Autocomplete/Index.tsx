@@ -16,7 +16,7 @@ interface IAutocompleteState {
   userInput: string;
 }
 
-interface AutocompleteProps
+export interface AutocompleteProps
   extends React.DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   suggestions: Array<string>;
   id: string;
