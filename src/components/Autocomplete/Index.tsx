@@ -28,7 +28,8 @@ interface AutocompleteProps
 enum Key {
   'ENTER' = 'Enter',
   'ARROW_UP' = 'ArrowUp',
-  'ARROW_DOWN' = 'ArrowDown'
+  'ARROW_DOWN' = 'ArrowDown',
+  'ESCAPE' = 'Escape'
 }
 
 const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
@@ -83,6 +84,14 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         if (data.activeSuggestion === data.filteredSuggestions.length - 1) return;
 
         setActiveSuggestion(data.activeSuggestion + 1);
+      },
+      [Key.ESCAPE]: () => {
+        if (data.showSuggestions) {
+          setData({
+            ...data,
+            showSuggestions: false
+          });
+        }
       }
     };
 
