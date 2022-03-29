@@ -27,3 +27,5 @@ const AutocompleteList = forwardRef<HTMLUListElement, AutocompleteListProps>(
 AutocompleteList.displayName = 'AutocompleteList';
 
 export default AutocompleteList;
+
+// TODO adicionar altura limite da lista e habilitar scroll
