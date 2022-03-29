@@ -5,11 +5,12 @@ interface AutocompleteListProps
   extends React.DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement> {}
 
 const List = css({
+  margin: 0,
   listStyle: 'none',
   paddingLeft: 0,
   position: 'absolute',
   zIndex: 10,
-  top: '25px',
+  top: 40,
   width: '100%'
 });
 
