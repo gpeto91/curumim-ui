@@ -15,5 +15,6 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["ES5", "ES2015", "ES2016", "DOM", "ESNext"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["src/stories/**"]
 }
