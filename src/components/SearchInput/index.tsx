@@ -12,6 +12,7 @@ interface ISearchInputProps
   onSearch: (value: string) => void;
   placeholder?: string;
   isLoading?: boolean;
+  delay?: number; // define o intervalo de tempo (ms) para fazer a busca quando o usuário terminar a digitação
 }
 
 const spin = keyframes({
@@ -61,14 +62,14 @@ const SearchIcon = css({
 });
 
 const SearchInput = React.forwardRef<HTMLInputElement, ISearchInputProps>(
-  ({ id, placeholder = '', onSearch, isLoading = false, ...props }, ref) => {
+  ({ id, placeholder = '', onSearch, isLoading = false, delay = 800, ...props }, ref) => {
     const [query, setQuery] = useState<string>('');
 
     const handleDebounceFn = (value: string) => {
       onSearch(value);
     };
 
-    const debounceFn = useCallback(debounce(handleDebounceFn, 300), []);
+    const debounceFn = useCallback(debounce(handleDebounceFn, delay), []);
 
     const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
       setQuery(event.currentTarget.value);
