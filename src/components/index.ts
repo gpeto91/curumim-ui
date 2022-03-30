@@ -5,3 +5,4 @@ export * from './FormField';
 export * from './Autocomplete';
 export * from './SearchInput';
 export * from './Checkbox';
+export * from './RadioGroup';
