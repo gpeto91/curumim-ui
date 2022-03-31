@@ -6,3 +6,4 @@ export * from './Autocomplete';
 export * from './SearchInput';
 export * from './Checkbox';
 export * from './RadioGroup';
+export * from './Image';
