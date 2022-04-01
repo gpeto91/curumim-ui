@@ -19,6 +19,13 @@ const SwitchRoot = css({
   borderRadius: '9999px',
   position: 'relative',
   WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
+  cursor: 'pointer',
+
+  '&:disabled': {
+    pointerEvents: 'none',
+    backgroundColor: '$gray',
+    opacity: 0.2
+  },
 
   '&:focus': {
     boxShadow: '$focus'
@@ -47,19 +54,28 @@ const SwitchThumb = css({
 interface ISwitchProps extends SwitchPrimitive.SwitchProps {
   id: string;
   label?: string;
+  isDisabled?: boolean;
 }
 
-const Switch = React.forwardRef<HTMLButtonElement, ISwitchProps>(({ id, label, ...props }, ref) => {
-  return (
-    <div className={SwitchWrapper()}>
-      <SwitchPrimitive.Root {...props} ref={ref} id={id} className={SwitchRoot()}>
-        <SwitchPrimitive.SwitchThumb className={SwitchThumb()} />
-      </SwitchPrimitive.Root>
+const Switch = React.forwardRef<HTMLButtonElement, ISwitchProps>(
+  ({ id, label, isDisabled = false, ...props }, ref) => {
+    return (
+      <div className={SwitchWrapper()}>
+        <SwitchPrimitive.Root
+          {...props}
+          ref={ref}
+          id={id}
+          disabled={isDisabled}
+          className={SwitchRoot()}
+        >
+          <SwitchPrimitive.SwitchThumb className={SwitchThumb()} />
+        </SwitchPrimitive.Root>
 
-      {label && <label>{label}</label>}
-    </div>
-  );
-});
+        {label && <label htmlFor={id}>{label}</label>}
+      </div>
+    );
+  }
+);
 
 Switch.displayName = 'Switch';
 
