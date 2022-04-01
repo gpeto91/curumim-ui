@@ -7,3 +7,4 @@ export * from './SearchInput';
 export * from './Checkbox';
 export * from './RadioGroup';
 export * from './Image';
+export * from './Switch';
