@@ -8,3 +8,4 @@ export * from './Checkbox';
 export * from './RadioGroup';
 export * from './Image';
 export * from './Switch';
+export * from './Typography';
