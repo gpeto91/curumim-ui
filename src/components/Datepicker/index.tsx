@@ -112,10 +112,11 @@ interface ICustomInputProps
 }
 
 const CustomInput = React.forwardRef<HTMLInputElement, ICustomInputProps>(
-  ({ value = '', onClick }, ref) => {
+  ({ value = '', onClick, isInvalid, id, ...props }, ref) => {
     return (
       <div className={InputWrapper()}>
         <input
+          {...props}
           className={InputStyle({ hasPadding: true, invalid: isInvalid })}
           ref={ref}
           value={value}
