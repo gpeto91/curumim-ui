@@ -9,3 +9,4 @@ export * from './RadioGroup';
 export * from './Image';
 export * from './Switch';
 export * from './Typography';
+export * from './Datepicker';
