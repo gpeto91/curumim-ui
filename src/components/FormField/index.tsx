@@ -2,6 +2,7 @@ import React from 'react';
 import * as Label from '@radix-ui/react-label';
 import { Input, SelectRoot, Autocomplete } from '..';
 import { css } from '../../theme';
+import { Datepicker } from '../Datepicker';
 
 interface IFormField {
   label: string;
@@ -64,7 +65,8 @@ const FormField: React.FunctionComponent<IFormField> = ({
           if (
             (React.isValidElement(child) && (child as React.ReactElement<any>).type === Input) ||
             (child as React.ReactElement<any>).type === SelectRoot ||
-            (child as React.ReactElement<any>).type === Autocomplete
+            (child as React.ReactElement<any>).type === Autocomplete ||
+            (child as React.ReactElement<any>).type === Datepicker
           ) {
             return React.cloneElement(child as React.ReactElement<any>, { isInvalid });
           }
