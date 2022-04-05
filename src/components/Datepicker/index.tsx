@@ -60,11 +60,6 @@ const InputStyle = css({
   display: 'flex',
   alignItems: 'center',
 
-  '&[data-invalid="true"]': {
-    boxShadow: '0 0 0 3px rgba(222, 33, 20, 0.6)',
-    borderRadius: '$2'
-  },
-
   '&:focus': {
     boxShadow: '$focus',
     borderRadius: '$2'
@@ -78,6 +73,12 @@ const InputStyle = css({
     hasPadding: {
       true: {
         paddingRight: 45
+      }
+    },
+    invalid: {
+      true: {
+        boxShadow: '0 0 0 3px rgba(222, 33, 20, 0.6)',
+        borderRadius: '$2'
       }
     }
   }
@@ -101,11 +102,13 @@ interface IDatepickerProps extends ReactDatePickerProps {
   maxDate?: Date;
   filterDate?: (date: Date) => boolean;
   timeIntervals?: number;
+  isInvalid?: boolean;
 }
 
 interface ICustomInputProps
   extends React.DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   value?: string;
+  isInvalid: boolean;
 }
 
 const CustomInput = React.forwardRef<HTMLInputElement, ICustomInputProps>(
@@ -113,7 +116,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, ICustomInputProps>(
     return (
       <div className={InputWrapper()}>
         <input
-          className={InputStyle({ hasPadding: true })}
+          className={InputStyle({ hasPadding: true, invalid: isInvalid })}
           ref={ref}
           value={value}
           readOnly
@@ -143,6 +146,7 @@ const Datepicker = React.forwardRef<ReactDatePicker, IDatepickerProps>(
       maxDate,
       filterDate,
       timeIntervals = 30,
+      isInvalid = false,
       ...props
     },
     ref
@@ -185,7 +189,7 @@ const Datepicker = React.forwardRef<ReactDatePicker, IDatepickerProps>(
         startDate={startDate}
         selected={date}
         onChange={isRange ? handleDatesPick : handleDatePick}
-        customInput={<CustomInput />}
+        customInput={<CustomInput isInvalid={isInvalid} />}
         locale={locale}
         dateFormat={dateFormat()}
         showTimeSelect={showTimeSelect}
