@@ -1,3 +1,5 @@
+// TODO adicionar atributo opcional para alt
+
 import React, { HTMLAttributes, useRef, useState } from 'react';
 import { keyframes } from '@stitches/core';
 import { FiLoader, FiImage } from 'react-icons/fi';
