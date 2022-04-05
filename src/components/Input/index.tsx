@@ -1,3 +1,6 @@
+// TODO parametrizar autoComplete
+// TODO adicionar verificador de força da senha e parâmetro para validação
+
 import React, { HTMLAttributes, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { forwardRef } from 'react';
@@ -148,5 +151,3 @@ const Input = forwardRef<HTMLInputElement, IInput>(
 Input.displayName = 'Input';
 
 export { Input };
-
-// TODO parametrizar autoComplete
