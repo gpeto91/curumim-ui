@@ -92,6 +92,7 @@ const timeTranslation = {
 
 interface IDatepickerProps extends ReactDatePickerProps {
   onDatePick: (date: Date | { start: Date; end: Date }) => void;
+  filterDate?: (date: Date) => boolean;
   id: string;
   startDate?: Date;
   locale?: 'ptBr' | 'enUs' | 'es';
@@ -101,7 +102,6 @@ interface IDatepickerProps extends ReactDatePickerProps {
   shouldCloseOnSelect?: boolean;
   minDate?: Date;
   maxDate?: Date;
-  filterDate?: (date: Date) => boolean;
   timeIntervals?: number;
   isInvalid?: boolean;
 }
