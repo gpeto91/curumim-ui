@@ -1,5 +1,3 @@
-// TODO adicionar atributo opcional para alt
-
 import React, { HTMLAttributes, useRef, useState } from 'react';
 import { keyframes } from '@stitches/core';
 import { FiLoader, FiImage } from 'react-icons/fi';
@@ -58,9 +56,10 @@ interface IImageProps
   width: number | string;
   height: number | string;
   caption?: string;
+  alt?: string;
 }
 
-const AppImage: React.FC<IImageProps> = ({ src, caption, width, height, ...props }) => {
+const AppImage: React.FC<IImageProps> = ({ src, caption, width, height, alt = '', ...props }) => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [hasError, setError] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -75,6 +74,7 @@ const AppImage: React.FC<IImageProps> = ({ src, caption, width, height, ...props
           <img
             {...props}
             src={src}
+            alt={alt}
             onLoad={() => setLoading(false)}
             onError={() => {
               setError(true);
