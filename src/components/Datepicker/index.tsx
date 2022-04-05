@@ -92,6 +92,7 @@ const timeTranslation = {
 
 interface IDatepickerProps extends ReactDatePickerProps {
   onDatePick: (date: Date | { start: Date; end: Date }) => void;
+  id: string;
   startDate?: Date;
   locale?: 'ptBr' | 'enUs' | 'es';
   isRange?: boolean;
@@ -118,6 +119,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, ICustomInputProps>(
         <input
           {...props}
           className={InputStyle({ hasPadding: true, invalid: isInvalid })}
+          id={id}
           ref={ref}
           value={value}
           readOnly
