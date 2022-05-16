@@ -75,6 +75,8 @@ const SelectRoot = forwardRef<HTMLButtonElement, ISelectProps>(
 );
 
 SelectRoot.displayName = 'SelectRoot';
+SelectGroup.displayName = 'SelectRoot.Group';
+SelectItem.displayName = 'SelectRoot.Item';
 
 const SelectNamespace = Object.assign(SelectRoot, { Group: SelectGroup, Item: SelectItem });
 

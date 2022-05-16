@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { css } from '../../theme';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 
