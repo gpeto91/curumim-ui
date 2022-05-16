@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { RadioItem } from './RadioItem';
 
@@ -13,6 +13,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupPrimitive.RadioGro
 );
 
 RadioGroup.displayName = 'RadioGroup';
+RadioItem.displayName = 'RadioGroup.Item';
 
 const RadioNamespace = Object.assign(RadioGroup, { Item: RadioItem });
 

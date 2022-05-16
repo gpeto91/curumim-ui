@@ -45,6 +45,6 @@ const SelectItem = forwardRef<HTMLDivElement, ISelectItem>(({ description, ...pr
   );
 });
 
-SelectItem.displayName = 'Item';
+SelectItem.displayName = 'SelectItem';
 
 export default SelectItem;

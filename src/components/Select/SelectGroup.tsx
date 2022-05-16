@@ -34,6 +34,6 @@ const SelectGroup = forwardRef<HTMLDivElement, ISelectGroup>(
   }
 );
 
-SelectGroup.displayName = 'Group';
+SelectGroup.displayName = 'SelectGroup';
 
 export default SelectGroup;
