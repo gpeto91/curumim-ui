@@ -3,6 +3,7 @@ import * as Label from '@radix-ui/react-label';
 import { Input, SelectRoot, Autocomplete } from '..';
 import { css } from '../../theme';
 import { Datepicker } from '../Datepicker';
+import { MultiSelect } from '../Multiselect';
 
 interface IFormField {
   label: string;
@@ -66,7 +67,8 @@ const FormField: React.FunctionComponent<IFormField> = ({
             (React.isValidElement(child) && (child as React.ReactElement<any>).type === Input) ||
             (child as React.ReactElement<any>).type === SelectRoot ||
             (child as React.ReactElement<any>).type === Autocomplete ||
-            (child as React.ReactElement<any>).type === Datepicker
+            (child as React.ReactElement<any>).type === Datepicker ||
+            (child as React.ReactElement<any>).type === MultiSelect
           ) {
             return React.cloneElement(child as React.ReactElement<any>, { isInvalid });
           }

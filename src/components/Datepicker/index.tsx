@@ -94,15 +94,33 @@ interface IDatepickerProps extends ReactDatePickerProps {
   onDatePick: (date: Date | { start: Date; end: Date }) => void;
   filterDate?: (date: Date) => boolean;
   id: string;
+
+  /** define data inicialmente marcada ao abrir o datepicker */
   startDate?: Date;
+
+  /** define idioma e formato da data do datepicker */
   locale?: 'ptBr' | 'enUs' | 'es';
+
+  /** define se a data é um intervalo de datas */
   isRange?: boolean;
+
+  /** controla se o select de horário deve ser exibido */
   showTimeSelect?: boolean;
   disabled?: boolean;
+
+  /** controla se o datepicker deve fechar automaticamente ao selecionar uma data */
   shouldCloseOnSelect?: boolean;
+
+  /** bloqueia datas menores do que a data mínima definida */
   minDate?: Date;
+
+  /** bloqueia datas maiores do que a data máxima definida */
   maxDate?: Date;
+
+  /** define intervalo de tempo do select de horário */
   timeIntervals?: number;
+
+  /** controla se campo está inválido */
   isInvalid?: boolean;
 }
 
